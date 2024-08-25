@@ -1,0 +1,28 @@
+{% extends "home/index.html" %}
+{% block body %}
+<h3>Register</h3>
+<form action="{% url 'home:register' %}" method='post'>
+    {% csrf_token %}
+
+   {{form.username.label}}
+   {{form.username}}
+    <br>
+    <br>
+   {{form.email.label}}
+   {{form.email}}
+    <br>
+    <br>
+   {{form.password1.label}}
+   {{form.password1}}
+    <br>
+    <br>
+   {{form.password2.label}}
+   {{form.password2}}
+   <br>
+   <br>
+   <input type="submit" name="submit" value="Register">
+</form>
+
+<p> Already have a Account <a href="{% url 'home:login' %}">Login</a> </p>
+
+{% endblock %}

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+
+
+    <p> Something to Show</p>
+    
+    
+    {% block body %}   
+    
+    <div class="container">
+        <h1>Hello, Bootstrap!</h1>
+        <p>This is a sample page using Bootstrap in Django.</p>
+    </div>
+
+
+    
+<div class="container mt-5">
+    <!-- Button to add new dropdown -->
+    <button id="addDropdownBtn" class="btn btn-primary mb-3">Add Dropdown</button>
+
+    <!-- Container where dropdowns will be added -->
+    <div id="dropdownContainer">
+        <!-- Dynamic dropdowns will be added here -->
+    </div>
+</div>
+
+    <!-- Custom JavaScript -->
+<script>
+    // Function to create a new dropdown with an input field
+    function createDropdown() {
+        // Create a new dropdown container
+        var newDropdown = document.createElement('div');
+        newDropdown.className = 'dropdown mt-3'; // Adding margin-top for spacing
+
+        // HTML structure for the dropdown with an input field
+        newDropdown.innerHTML = `
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                Dropdown with Input
+            </button>
+            <ul class="dropdown-menu p-3" aria-labelledby="dropdownMenuButton" style="min-width: 300px;">
+                <li>
+                    <input type="text" class="form-control dropdown-input" placeholder="Type something and press Enter">
+                </li>
+                <li class="dynamic-buttons-container mt-2">
+                    <!-- New buttons will be added here -->
+                </li>
+            </ul>
+        `;
+
+        // Add the new dropdown to the container
+        document.getElementById('dropdownContainer').appendChild(newDropdown);
+
+        // Add event listener to the input field inside the dropdown
+        var inputField = newDropdown.querySelector('.dropdown-input');
+        inputField.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent form submission if inside a form
+                
+                // Get the value from the input field
+                var inputValue = event.target.value.trim();
+                
+                if (inputValue !== '') {
+                    // Prompt the user to enter a URL
+                    var linkUrl = prompt('Enter the URL for this button:', 'https://');
+
+                    // Create a new button element
+                    var newButton = document.createElement('button');
+                    newButton.className = 'btn btn-outline-primary btn-sm me-2 mt-2';
+                    newButton.textContent = inputValue;
+
+                    // Set the URL as a data attribute on the button
+                    newButton.setAttribute('data-url', linkUrl);
+
+                    // Add click event to open the link
+                    newButton.addEventListener('click', function() {
+                        window.open(this.getAttribute('data-url'), '_blank');
+                    });
+
+                    // Add the new button to the container
+                    var buttonsContainer = newDropdown.querySelector('.dynamic-buttons-container');
+                    buttonsContainer.appendChild(newButton);
+                    
+                    // Clear the input field
+                    event.target.value = '';
+                }
+            }
+        });
+    }
+
+    // Event listener for the "Add Dropdown" button
+    document.getElementById('addDropdownBtn').addEventListener('click', createDropdown);
+</script>
+
+    
+
+    {% endblock %}
+    
+</body> 
+</html>
